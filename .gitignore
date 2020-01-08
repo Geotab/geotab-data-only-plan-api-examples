@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2
+/Geotab.DataOnlyPlan.API.Examples/obj
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2/Geotab.DataOnlyPlan.API.Examples.runtimeconfig.json
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2/Geotab.DataOnlyPlan.API.Examples.runtimeconfig.dev.json
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2/Geotab.DataOnlyPlan.API.Examples.pdb
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2/Geotab.DataOnlyPlan.API.Examples.dll
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/netcoreapp2.2/Geotab.DataOnlyPlan.API.Examples.deps.json
+/Geotab.DataOnlyPlan.API.Examples/obj
+/Geotab.DataOnlyPlan.API.Examples.FleetMonitor/bin/Debug/netcoreapp2.2
+/Geotab.DataOnlyPlan.API.Examples.FleetMonitor/obj

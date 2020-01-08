@@ -1,0 +1,38 @@
+# Configuration file for Geotab Data-Only Plan API Example: Fleet Monitor
+# Structure: <Key>|<Value>
+# Parameter Descriptions:
+# 	VehicleTrackingOption:
+#		Reporting:  All vehicles for which data are received will be tracked.
+#		Specific:  Only the vehicles identified by the 
+#			       SpecificVehiclesToTrack parameter will be tracked.
+#	SpecificVehiclesToTrack:  A comma-separated list of device Ids that
+#							  correspond to vehicles to be tracked.  Only
+#							  used if the VehicleTrackingOption is set to
+#							  Specific.
+#   DiagnosticsToTrack: A comma-separated list of diagnostic Ids that
+#                       correspond with diagnostics (StatusData or
+#						FaultData) that are to be monitored for tracked
+#						vehicles.
+#	FeedStartOption: How the data feeds should be started (CurrentTime, 
+#					 SpecificTime or FeedResultToken).
+#	FeedStartSpecificTimeUTC: Only used if FeedStartOption is set to 
+#						   SpecificTime. The UTC time (formatted as
+#						   yyyy-MM-ddTHH:mm:ssZ) at which to start all
+#						   data feeds. 
+#	FeedIntervalSeconds: The number of seconds to wait, after processing
+#						 a batch of feed results, before executing the next
+#						 iteration of feed calls.
+#	OutputFolder: The folder where data will be written to.
+#	MaximumFileSizeMB: The maximum size, in megabytes, that a file may
+#					   reach before a new file is started.				
+# -------------------------------------------------------------------------
+# lines beginning with '#' are comments and ignored
+Key|Value
+VehicleTrackingOption|Specific
+SpecificVehiclesToTrack|b1,b2
+DiagnosticsToTrack|DiagnosticOdometerAdjustmentId,DiagnosticFuelLevelId,DiagnosticFuelUnitsId,DiagnosticEngineHoursAdjustmentId,DiagnosticCrankingVoltageId,DiagnosticEngineRoadSpeedId,DiagnosticEngineSpeedId,DiagnosticAccelerationUpDownId,DiagnosticGeneralVehicleWarningLightId,DiagnosticEngineHotWarningLightId,DiagnosticOilLightOnId,DiagnosticVehicleAbsSystemFailedId,DiagnosticVehicleAwdSystemFailedId,DiagnosticFlashMemoryFailureId,DiagnosticInvalidGpsMessagesReceivedId,DiagnosticAux4Id
+FeedStartOption|CurrentTime
+FeedStartSpecificTimeUTC|2020-01-13T08:00:00Z
+FeedIntervalSeconds|30
+OutputFolder|C:\Temp
+MaximumFileSizeMB|1

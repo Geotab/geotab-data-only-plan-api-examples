@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# CS0184: 'is' expression's given expression is never of the provided type
+dotnet_diagnostic.CS0184.severity = none
+
+# IDE0067: Dispose objects before losing scope
+dotnet_diagnostic.IDE0067.severity = none
