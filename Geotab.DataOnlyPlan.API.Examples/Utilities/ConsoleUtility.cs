@@ -29,6 +29,35 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         }
 
         /// <summary>
+        /// Prompts the user to input a directory path until a valid entry is made.  The validated directory path is returned.
+        /// </summary>
+        /// <returns>The validated directory path.</returns>
+        public static string GetUserInputDirectory()
+        {
+            string filePath = string.Empty;
+            bool filePathIsValid = false;
+
+            // Get the user to enter a valid directory path.
+            while (!filePathIsValid)
+            {
+                Console.ForegroundColor = Common.ConsoleColorForUserPrompts;
+                Console.Write($"> Enter a folder path (e.g. 'C:\\Temp'):");
+                Console.ForegroundColor = Common.ConsoleColorForUserInput;
+                filePath = Console.ReadLine();
+                Console.ForegroundColor = Common.ConsoleColorDefault;
+                if (Directory.Exists(filePath))
+                {
+                    filePathIsValid = true;
+                }
+                else
+                {
+                    ConsoleUtility.LogError($"The folder entered does not exist.");
+                }
+            }
+            return filePath;
+        }
+
+        /// <summary>
         /// Prompts the user to input a file path followed by a file name until valid entries are made.  The validated full path is returned.
         /// </summary>
         /// <param name="fileTypeDescription">A description of the file type being sought (e.g. '<c>config</c>').  For use in user prompts.</param>
@@ -36,7 +65,6 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         public static string GetUserInputFilePath(string fileTypeDescription)
         {
             string filePath = string.Empty;
-            string fileName = string.Empty;
             string fileFullPath = string.Empty;
             bool filePathIsValid = false;
             bool fileNameIsValid = false;
@@ -65,7 +93,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
                 Console.ForegroundColor = Common.ConsoleColorForUserPrompts;
                 Console.Write($"> Enter {fileTypeDescription} file name (e.g. 'FileName.csv'):");
                 Console.ForegroundColor = Common.ConsoleColorForUserInput;
-                fileName = Console.ReadLine();
+                string fileName = Console.ReadLine();
                 Console.ForegroundColor = Common.ConsoleColorDefault;
                 fileFullPath = Path.Combine(filePath, fileName);
                 if (File.Exists(fileFullPath))
@@ -320,7 +348,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
                 {
                     Console.Write($"- ");
                     Console.ForegroundColor = listItemIdColor;
-                    Console.Write($"{listItem.Key.ToString()} ");
+                    Console.Write($"{listItem.Key} ");
                     Console.ForegroundColor = listItemColor;
                     Console.WriteLine($"{listItem.Value}");
                 }
@@ -337,7 +365,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
 
                     Console.Write($"- ");
                     Console.ForegroundColor = listItemIdColor;
-                    Console.Write($"{listItem.Key.ToString().PadRight(2)} ");
+                    Console.Write($"{listItem.Key,-2} ");
                     Console.ForegroundColor = listItemColor;
                     Console.Write($"{listItem.Value.PadRight(maxItemLength)} ");
                     listItemNumber++;
@@ -351,7 +379,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
                     listItem = listItems[listItemNumber];
                     Console.Write($"- ");
                     Console.ForegroundColor = listItemIdColor;
-                    Console.Write($"{listItem.Key.ToString().PadRight(2)} ");
+                    Console.Write($"{listItem.Key,-2} ");
                     Console.ForegroundColor = listItemColor;
                     Console.WriteLine($"{listItem.Value.PadRight(maxItemLength)}");
                 }
@@ -393,7 +421,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
             Type type = obj.GetType();
             Console.WriteLine($"Type: {type.Name}");
             PropertyInfo[] properties = type.GetProperties();
-            Console.WriteLine($"Value: {obj.ToString()}");
+            Console.WriteLine($"Value: {obj}");
             Console.WriteLine($"Properties (N = {properties.Length}):");
             foreach (var property in properties)
             {
@@ -459,7 +487,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         {
             Console.ForegroundColor = Common.ConsoleColorDefault;
             LogSeparator2();
-            Console.WriteLine($"TEST {testNumber.ToString()}");
+            Console.WriteLine($"TEST {testNumber}");
             Console.Write("Method: ");
             Console.ForegroundColor = Common.ConsoleColorForUserInput;
             Console.WriteLine(methodName);
@@ -471,10 +499,10 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
             }
             else
             {
-                Console.WriteLine($"Parameters (N = {parameters.Count.ToString()}):");
+                Console.WriteLine($"Parameters (N = {parameters.Count}):");
                 foreach (KeyValuePair<string, object> parameter in parameters)
                 {
-                    Console.WriteLine($"   {parameter.Key}: {parameter.Value.ToString()}");
+                    Console.WriteLine($"   {parameter.Key}: {parameter.Value}");
                 }
             }
 

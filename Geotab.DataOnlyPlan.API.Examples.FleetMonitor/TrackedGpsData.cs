@@ -15,7 +15,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
     class TrackedGpsData
     {
         const string GpsDataHeader = "Device ID|Device Serial Number|Device Name|GPS Time|Latitude|Longitude|Speed";
-        readonly List<LogRecord> receivedLogRecords = new List<LogRecord>();
+        readonly List<LogRecord> receivedLogRecords = new();
         bool outputFileCreated;
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             // Validate to ensure LogRecord is for the subject Device.
             if (logRecord.Device.Id != DeviceId)
             {
-                throw new ArgumentException($"The supplied LogRecord is for a Device with Id '{logRecord.Device.Id.ToString()}' and cannot be added to this TrackedGpsData which represents the Device with Id '{DeviceId.ToString()}'.");
+                throw new ArgumentException($"The supplied LogRecord is for a Device with Id '{logRecord.Device.Id}' and cannot be added to this TrackedGpsData which represents the Device with Id '{DeviceId}'.");
             }
 
             receivedLogRecords.Add(logRecord);
@@ -108,7 +108,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                         }
                         foreach (LogRecord logRecord in sortedLogRecords)
                         {
-                            await fileWriter.WriteLineAsync($"{DeviceId.ToString()}|{DeviceSerialNumber}|{DeviceName}|{logRecord.DateTime.ToString()}|{logRecord.Latitude.ToString()}|{logRecord.Longitude.ToString()}|{logRecord.Speed.ToString()}");
+                            await fileWriter.WriteLineAsync($"{DeviceId}|{DeviceSerialNumber}|{DeviceName}|{logRecord.DateTime}|{logRecord.Latitude}|{logRecord.Longitude}|{logRecord.Speed}");
                         }
                     }
                     receivedLogRecords.Clear();

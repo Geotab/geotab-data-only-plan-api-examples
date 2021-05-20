@@ -23,7 +23,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 int getFeedSecondsToWaitBetweenCalls = 5;
                 long? feedVersion = 0;
 
-                List<Device> deviceCache = new List<Device>();
+                List<Device> deviceCache = new();
                 FeedResult<Device> feedResult;
 
                 // Start by populating the deviceCache with a list of all devices.

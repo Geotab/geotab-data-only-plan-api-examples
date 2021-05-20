@@ -26,7 +26,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
 
                 DriverChangeType driverChangeType = DriverChangeType.Driver;
 
-                ConsoleUtility.LogInfoStart($"Adding driverChange of type '{driverChangeType.ToString()}' for driver '{driver.Id.ToString()}' and device '{device.Id.ToString()}' to database '{api.Credentials.Database}'...");
+                ConsoleUtility.LogInfoStart($"Adding driverChange of type '{driverChangeType}' for driver '{driver.Id}' and device '{device.Id}' to database '{api.Credentials.Database}'...");
                                
                 addedDriverChangeId = await api.AddDriverChangeAsync(dateTime, device, driver, driverChangeType);
 

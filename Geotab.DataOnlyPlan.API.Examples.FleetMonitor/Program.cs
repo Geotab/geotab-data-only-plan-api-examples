@@ -73,9 +73,9 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 {
                     throw new ArgumentException($"The specified output folder, '{parentOutputFolder}', does not exist.");
                 }
-                DirectoryInfo directoryInfo = new DirectoryInfo(parentOutputFolder);
-                string subfolderName = $"Output_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}";
-                directoryInfo.CreateSubdirectory(subfolderName);
+                DirectoryInfo directoryInfo = new(parentOutputFolder);
+                string subfolderName = $"Output_{DateTime.Now:yyyyMMdd_HHmmss}";
+                _ = directoryInfo.CreateSubdirectory(subfolderName);
                 outputFolder = Path.Combine(directoryInfo.FullName, subfolderName);
 
                 // Validate and set maximum file size.
@@ -182,7 +182,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 {
                     if (feedIntervalSecondsInt < ShortestAllowedFeedIntervalSeconds)
                     {
-                        ConsoleUtility.LogListItem($"Note - The specified FeedIntervalSeconds value of '{feedIntervalSecondsString}' is less then the shortest allowed value of '{ShortestAllowedFeedIntervalSeconds.ToString()}'.  FeedIntervalSeconds will be set to:", ShortestAllowedFeedIntervalSeconds.ToString(), Common.ConsoleColorForUnchangedData, Common.ConsoleColorForErrors);
+                        ConsoleUtility.LogListItem($"Note - The specified FeedIntervalSeconds value of '{feedIntervalSecondsString}' is less then the shortest allowed value of '{ShortestAllowedFeedIntervalSeconds}'.  FeedIntervalSeconds will be set to:", ShortestAllowedFeedIntervalSeconds.ToString(), Common.ConsoleColorForUnchangedData, Common.ConsoleColorForErrors);
                         feedIntervalSeconds = ShortestAllowedFeedIntervalSeconds;
                     }
                     else
@@ -214,7 +214,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             finally
             {
                 ConsoleUtility.LogUtilityShutdown(title);
-                Console.ReadKey();
+                _ = Console.ReadKey();
             }
         }
 
@@ -251,7 +251,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         static async Task<List<Device>> GetAllDevicesAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitDevice = 5000;
-            List<Device> allDevices = new List<Device>();
+            List<Device> allDevices = new();
             long? feedVersion = 0;
             FeedResult<Device> feedResult;
             bool keepGoing = true;
@@ -277,7 +277,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         static async Task<List<Diagnostic>> GetAllDiagnosticsAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitDiagnostic = 50000;
-            List<Diagnostic> allDiagnostics = new List<Diagnostic>();
+            List<Diagnostic> allDiagnostics = new();
             long? feedVersion = 0;
             FeedResult<Diagnostic> feedResult;
             bool keepGoing = true;

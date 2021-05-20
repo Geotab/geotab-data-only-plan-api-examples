@@ -18,8 +18,6 @@ namespace Geotab.DataOnlyPlan.API.Examples
             GeotabDataOnlyPlanAPI api;
             string username;
             string password;
-            string server = "my.geotab.com";
-            string database = "";
             string title = "";
 
             string lastCreateDatabaseResult;
@@ -41,8 +39,8 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 ConsoleUtility.LogUtilityStartup(title);
 
                 // Request MyGeotab credentials and database name.
-                server = ConsoleUtility.GetUserInput($"MyGeotab server");
-                database = ConsoleUtility.GetUserInput($"Database to run examples against.").ToLower();
+                string server = ConsoleUtility.GetUserInput($"MyGeotab server");
+                string database = ConsoleUtility.GetUserInput($"Database to run examples against.").ToLower();
                 username = ConsoleUtility.GetUserInput($"MyGeotab username");
                 password = ConsoleUtility.GetUserInputMasked($"MyGeotab password");
 
@@ -329,7 +327,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
             finally
             {
                 ConsoleUtility.LogUtilityShutdown(title);
-                Console.ReadKey();
+                _ = Console.ReadKey();
             }
         }
     }

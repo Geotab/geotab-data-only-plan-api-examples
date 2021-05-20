@@ -17,8 +17,8 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
     {
         readonly string faultDataHeader = "Device ID|Device Serial Number|Device Name|FaultData Time|Diagnostic ID|Diagnostic Name|Failure Mode Code|Failure Mode Name|Failure Mode Source|Controller Name|Fault Count|Fault State|Malfunction Lamp Lit|Red Stop Lamp Lit|Amber Warning Lamp Lit|Protect Warning Lamp Lit|DismissedDataTime|Dismissed User";
         readonly string statusDataHeader = "Device ID|Device Serial Number|Device Name|StatusData Time|Diagnostic ID|Name|Source|Value|Units";
-        readonly List<FaultData> receivedFaultData = new List<FaultData>();
-        readonly List<StatusData> receivedStatusData = new List<StatusData>();
+        readonly List<FaultData> receivedFaultData = new();
+        readonly List<StatusData> receivedStatusData = new();
 
         /// <summary>
         /// The broad category of diagnostic that a <see cref="TrackedDiagnostic"/> falls under.
@@ -37,44 +37,21 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         {
             // Determine the DiagnosticCategory based on the DiagnosticType of the suppled Diagnostic.
             DiagnosticType = (DiagnosticType)diagnostic.DiagnosticType;
-            switch (DiagnosticType)
+            DiagnosticCategoryType = DiagnosticType switch
             {
-                case DiagnosticType.None:
-                    throw new NotSupportedException($"The DiagnosticType '{DiagnosticType}' is not supported.");
-                case DiagnosticType.Sid:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.Pid:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.GoDiagnostic:
-                    DiagnosticCategoryType = DiagnosticCategory.StatusData;
-                    break;
-                case DiagnosticType.DataDiagnostic:
-                    DiagnosticCategoryType = DiagnosticCategory.StatusData;
-                    break;
-                case DiagnosticType.SuspectParameter:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.ObdFault:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.GoFault:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.ObdWwhFault:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.ProprietaryFault:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                case DiagnosticType.LegacyFault:
-                    DiagnosticCategoryType = DiagnosticCategory.FaultData;
-                    break;
-                default:
-                    throw new NotSupportedException($"The DiagnosticType '{DiagnosticType}' is not supported.");
-            }
-
+                DiagnosticType.None => throw new NotSupportedException($"The DiagnosticType '{DiagnosticType}' is not supported."),
+                DiagnosticType.Sid => DiagnosticCategory.FaultData,
+                DiagnosticType.Pid => DiagnosticCategory.FaultData,
+                DiagnosticType.GoDiagnostic => DiagnosticCategory.StatusData,
+                DiagnosticType.DataDiagnostic => DiagnosticCategory.StatusData,
+                DiagnosticType.SuspectParameter => DiagnosticCategory.FaultData,
+                DiagnosticType.ObdFault => DiagnosticCategory.FaultData,
+                DiagnosticType.GoFault => DiagnosticCategory.FaultData,
+                DiagnosticType.ObdWwhFault => DiagnosticCategory.FaultData,
+                DiagnosticType.ProprietaryFault => DiagnosticCategory.FaultData,
+                DiagnosticType.LegacyFault => DiagnosticCategory.FaultData,
+                _ => throw new NotSupportedException($"The DiagnosticType '{DiagnosticType}' is not supported."),
+            };
             DeviceId = device.Id;
             DeviceName = device.Name;
             DeviceSerialNumber = device.SerialNumber;
@@ -183,11 +160,11 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             // Validate to ensure FaultData is for the subject Device and Diagnostic.
             if (faultData.Device.Id != DeviceId)
             {
-                throw new ArgumentException($"The supplied FaultData is for a Device with Id '{faultData.Device.Id.ToString()}' and cannot be added to this TrackedDiagnostic which represents the Device with Id '{DeviceId.ToString()}'.");
+                throw new ArgumentException($"The supplied FaultData is for a Device with Id '{faultData.Device.Id}' and cannot be added to this TrackedDiagnostic which represents the Device with Id '{DeviceId}'.");
             }
             if (faultData.Diagnostic.Id != DiagnosticId)
             {
-                throw new ArgumentException($"The supplied FaultData is for a Diagnostic with Id '{faultData.Diagnostic.Id.ToString()}' and cannot be added to this TrackedDiagnostic which represents the Diagnostic with Id '{DiagnosticId.ToString()}'.");
+                throw new ArgumentException($"The supplied FaultData is for a Diagnostic with Id '{faultData.Diagnostic.Id}' and cannot be added to this TrackedDiagnostic which represents the Diagnostic with Id '{DiagnosticId}'.");
             }
             receivedFaultData.Add(faultData);
 
@@ -213,11 +190,11 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             // Validate to ensure StatusData is for the subject Device and Diagnostic.
             if (statusData.Device.Id != DeviceId)
             {
-                throw new ArgumentException($"The supplied StatusData is for a Device with Id '{statusData.Device.Id.ToString()}' and cannot be added to this TrackedDiagnostic which represents the Device with Id '{DeviceId.ToString()}'.");
+                throw new ArgumentException($"The supplied StatusData is for a Device with Id '{statusData.Device.Id}' and cannot be added to this TrackedDiagnostic which represents the Device with Id '{DeviceId}'.");
             }
             if (statusData.Diagnostic.Id != DiagnosticId)
             {
-                throw new ArgumentException($"The supplied StatusData is for a Diagnostic with Id '{statusData.Diagnostic.Id.ToString()}' and cannot be added to this TrackedDiagnostic which represents the Diagnostic with Id '{DiagnosticId.ToString()}'.");
+                throw new ArgumentException($"The supplied StatusData is for a Diagnostic with Id '{statusData.Diagnostic.Id}' and cannot be added to this TrackedDiagnostic which represents the Diagnostic with Id '{DiagnosticId}'.");
             }
             receivedStatusData.Add(statusData);
 
@@ -270,7 +247,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                                         dismissUserName = dismissUser.Name;
                                         dismissDateTime = faultData.DismissDateTime.ToString();
                                     }
-                                    await fileWriter.WriteLineAsync($"{DeviceId.ToString()}|{DeviceSerialNumber}|{DeviceName}|{faultData.DateTime.ToString()}|{faultData.Diagnostic.Id.ToString()}|{faultData.Diagnostic.Name}|{failureModeCode}|{failureModeName}|{failureModeSourceName}|{faultData.Controller.Name}|{faultData.Count.ToString()}|{faultData.FaultState.ToString()}|{faultData.MalfunctionLamp.ToString()}|{faultData.RedStopLamp.ToString()}|{faultData.AmberWarningLamp.ToString()}|{faultData.ProtectWarningLamp.ToString()}|{dismissDateTime}|{dismissUserName}");
+                                    await fileWriter.WriteLineAsync($"{DeviceId}|{DeviceSerialNumber}|{DeviceName}|{faultData.DateTime}|{faultData.Diagnostic.Id}|{faultData.Diagnostic.Name}|{failureModeCode}|{failureModeName}|{failureModeSourceName}|{faultData.Controller.Name}|{faultData.Count}|{faultData.FaultState}|{faultData.MalfunctionLamp}|{faultData.RedStopLamp}|{faultData.AmberWarningLamp}|{faultData.ProtectWarningLamp}|{dismissDateTime}|{dismissUserName}");
                                 }
                             }
                             receivedFaultData.Clear();
@@ -286,7 +263,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                             {
                                 foreach (StatusData statusData in sortedStatusData)
                                 {
-                                    await fileWriter.WriteLineAsync($"{DeviceId.ToString()}|{DeviceSerialNumber}|{DeviceName}|{statusData.DateTime.ToString()}|{statusData.Diagnostic.Id.ToString()}|{statusData.Diagnostic.Name}|{statusData.Diagnostic.Source.Name}|{statusData.Data.ToString()}|{statusData.Diagnostic.UnitOfMeasure.Name}");
+                                    await fileWriter.WriteLineAsync($"{DeviceId}|{DeviceSerialNumber}|{DeviceName}|{statusData.DateTime}|{statusData.Diagnostic.Id}|{statusData.Diagnostic.Name}|{statusData.Diagnostic.Source.Name}|{statusData.Data}|{statusData.Diagnostic.UnitOfMeasure.Name}");
                                 }
                             }
                             receivedStatusData.Clear();

@@ -15,7 +15,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 // Update a driver with keys to a NON-driver.
                 // Set parameter values to apply when adding device.
                 string id = userId;
-                DateTime activeTo = new DateTime(2037, 1, 31);
+                DateTime activeTo = new(2037, 1, 31);
                 string comment = "Driver with keys updated to NON-driver";
                 string designation = "Driver 2 Upd";
                 string employeeNo = "Employee 2 Upd";

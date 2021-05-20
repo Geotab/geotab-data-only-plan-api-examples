@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Geotab.DataOnlyPlan.API.Examples.Utilities;
 
@@ -13,7 +14,15 @@ namespace Geotab.DataOnlyPlan.API.Examples
             try
             {
                 string id = Guid.NewGuid().ToString();
-                string captchaImage = await api.GenerateCaptchaAsync(id);
+
+                string filePath = "C:\\TEMP";
+                if (!Directory.Exists(filePath))
+                {
+                    filePath = ConsoleUtility.GetUserInputDirectory();
+                }
+                string outputFilePath = $"{filePath}\\GeotabDataOnlyPlanAPI_CAPTCHA_{id}.jpg";
+
+                var result = await api.GenerateCaptchaAsync(id, outputFilePath);
             }
             catch (Exception ex)
             {

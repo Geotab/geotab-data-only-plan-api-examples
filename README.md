@@ -6,7 +6,7 @@ The *Geotab Data-Only Plan API Examples* solution is a Visual Studio solution th
 
 The solution requires:
 
-- [.Net core 2.0 SDK](https://dot.net/core) or higher
+- [.NET 5.0 SDK](https://dotnet.microsoft.com/download) or higher
 - Geotab.Checkmate.ObjectModel (included with the NuGet package)
 - Ideally, MyAdmin credentials with the *MyAdminApiUser* and *Device_Admin* roles should be used when authenticating in order to be able to take advantage of all available methods; MyGeotab credentials may be used, but then the *CreateDatabaseAsync()* method cannot be used.
 

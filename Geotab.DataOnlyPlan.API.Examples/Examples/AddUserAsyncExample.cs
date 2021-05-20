@@ -18,8 +18,8 @@ namespace Geotab.DataOnlyPlan.API.Examples
             {
                 // Add a user that is a driver with a key.
                 // Set parameter values to apply when adding user.
-                List<Key> keys = new List<Key>();
-                Key key = new Key(DriverKeyType.CustomNfc, null, "1234567890");
+                List<Key> keys = new();
+                Key key = new(DriverKeyType.CustomNfc, null, "1234567890");
                 keys.Add(key);
 
                 string comment = "User added as driver with key.";

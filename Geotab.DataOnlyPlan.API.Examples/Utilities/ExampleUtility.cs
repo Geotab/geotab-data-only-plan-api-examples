@@ -20,7 +20,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         public static async Task<List<Device>> GetAllDevicesAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitDevice = 5000;
-            List<Device> allDevices = new List<Device>();
+            List<Device> allDevices = new();
             long? feedVersion = 0;
             FeedResult<Device> feedResult;
             bool keepGoing = true;
@@ -46,7 +46,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         public static async Task<List<Diagnostic>> GetAllDiagnosticsAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitDiagnostic = 50000;
-            List<Diagnostic> allDiagnostics = new List<Diagnostic>();
+            List<Diagnostic> allDiagnostics = new();
             long? feedVersion = 0;
             FeedResult<Diagnostic> feedResult;
             bool keepGoing = true;
@@ -72,7 +72,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         public static async Task<List<DriverChange>> GetAllDriverChangesAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitDriverChange = 50000;
-            List<DriverChange> allDriverChanges = new List<DriverChange>();
+            List<DriverChange> allDriverChanges = new();
             long? feedVersion = 0;
             FeedResult<DriverChange> feedResult;
             bool keepGoing = true;
@@ -98,7 +98,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.Utilities
         public static async Task<List<User>> GetAllUsersAsync(Geotab.DataOnlyPlan.API.GeotabDataOnlyPlanAPI api)
         {
             const int DefaultFeedResultsLimitUser = 5000;
-            List<User> allUsers = new List<User>();
+            List<User> allUsers = new();
             long? feedVersion = 0;
             FeedResult<User> feedResult;
             bool keepGoing = true;

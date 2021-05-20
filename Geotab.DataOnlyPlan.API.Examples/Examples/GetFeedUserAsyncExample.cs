@@ -23,7 +23,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 int getFeedSecondsToWaitBetweenCalls = 5;
                 long? feedVersion = 0;
 
-                List<User> userCache = new List<User>();
+                List<User> userCache = new();
                 FeedResult<User> feedResult;
 
                 // Start by populating the userCache with a list of all users.

@@ -24,7 +24,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 int getFeedSecondsToWaitBetweenCalls = 5;
                 long? feedVersion = 0;
 
-                List<Diagnostic> diagnosticCache = new List<Diagnostic>();
+                List<Diagnostic> diagnosticCache = new();
                 FeedResult<Diagnostic> feedResult;
 
                 // Start by populating the diagnosticCache with a list of all diagnostics.

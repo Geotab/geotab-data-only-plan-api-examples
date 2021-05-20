@@ -29,13 +29,13 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 feedVersion = feedResult.ToVersion;
 
                 // Log results to console.
-                Console.WriteLine($"Initial feed start time: {getFeedStartTime.ToString()}");
-                Console.WriteLine($"Initial FeedResult ToVersion: {feedVersion.ToString()}");
-                Console.WriteLine($"Initial FeedResult Records: {feedResult.Data.Count.ToString()}");
+                Console.WriteLine($"Initial feed start time: {getFeedStartTime}");
+                Console.WriteLine($"Initial FeedResult ToVersion: {feedVersion}");
+                Console.WriteLine($"Initial FeedResult Records: {feedResult.Data.Count}");
                 if (feedResult.Data.Count > 0)
                 {
-                    Console.WriteLine($"Initial FeedResult first record DateTime: {feedResult.Data[0].DateTime.ToString()}");
-                    Console.WriteLine($"Initial FeedResult last record DateTime: {feedResult.Data[feedResult.Data.Count - 1].DateTime.ToString()}");
+                    Console.WriteLine($"Initial FeedResult first record DateTime: {feedResult.Data[0].DateTime}");
+                    Console.WriteLine($"Initial FeedResult last record DateTime: {feedResult.Data[feedResult.Data.Count - 1].DateTime}");
                 }
 
                 // Execute a GetFeed loop for the prescribed number of iterations, setting the fromVersion on the first iteration to the toVersion that was returned by the initial GetFeed call.
@@ -46,13 +46,13 @@ namespace Geotab.DataOnlyPlan.API.Examples
                     feedVersion = feedResult.ToVersion;
 
                     // Log results to console.
-                    Console.WriteLine($"Feed iteration: {getFeedCallNumber.ToString()}");
-                    Console.WriteLine($"Feed iteration: {getFeedCallNumber.ToString()} FeedResult ToVersion: {feedVersion.ToString()}");
-                    Console.WriteLine($"Feed iteration: {getFeedCallNumber.ToString()} FeedResult Records: {feedResult.Data.Count.ToString()}");
+                    Console.WriteLine($"Feed iteration: {getFeedCallNumber}");
+                    Console.WriteLine($"Feed iteration: {getFeedCallNumber} FeedResult ToVersion: {feedVersion}");
+                    Console.WriteLine($"Feed iteration: {getFeedCallNumber} FeedResult Records: {feedResult.Data.Count}");
                     if (feedResult.Data.Count > 0)
                     {
-                        Console.WriteLine($"Feed iteration: {getFeedCallNumber.ToString()} FeedResult first record DateTime: {feedResult.Data[0].DateTime.ToString()}");
-                        Console.WriteLine($"Feed iteration: {getFeedCallNumber.ToString()} FeedResult last record DateTime: {feedResult.Data[feedResult.Data.Count - 1].DateTime.ToString()}");
+                        Console.WriteLine($"Feed iteration: {getFeedCallNumber} FeedResult first record DateTime: {feedResult.Data[0].DateTime}");
+                        Console.WriteLine($"Feed iteration: {getFeedCallNumber} FeedResult last record DateTime: {feedResult.Data[feedResult.Data.Count - 1].DateTime}");
                     }
                     // Wait for the prescribed amount of time before making the next GetFeed call.
                     Thread.Sleep(getFeedSecondsToWaitBetweenCalls * 1000);

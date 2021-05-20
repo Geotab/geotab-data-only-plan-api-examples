@@ -14,3 +14,5 @@
 /Geotab.DataOnlyPlan.API.Examples/obj
 /Geotab.DataOnlyPlan.API.Examples.FleetMonitor/bin/Debug/netcoreapp2.2
 /Geotab.DataOnlyPlan.API.Examples.FleetMonitor/obj
+/Geotab.DataOnlyPlan.API.Examples/bin/Debug/net5.0
+/Geotab.DataOnlyPlan.API.Examples.FleetMonitor/bin/Debug/net5.0

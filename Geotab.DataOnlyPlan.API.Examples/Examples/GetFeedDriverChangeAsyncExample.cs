@@ -23,7 +23,7 @@ namespace Geotab.DataOnlyPlan.API.Examples
                 int getFeedSecondsToWaitBetweenCalls = 5;
                 long? feedVersion = 0;
 
-                List<DriverChange> driverChangeCache = new List<DriverChange>();
+                List<DriverChange> driverChangeCache = new();
                 FeedResult<DriverChange> feedResult;
 
                 // Start by populating the driverChangeCache with a list of all driverChanges.

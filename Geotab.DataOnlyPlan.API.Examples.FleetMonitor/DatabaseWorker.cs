@@ -93,26 +93,26 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             {
                 if (File.Exists(faultDataTokenFilePath))
                 {
-                    using (StreamReader faultDataTokenFileReader = new StreamReader(faultDataTokenFilePath))
+                    using (StreamReader faultDataTokenFileReader = new(faultDataTokenFilePath))
                     {
                         String faultDataTokenString = faultDataTokenFileReader.ReadToEnd();
-                        long.TryParse(faultDataTokenString, out faultDataToken);
+                        _ = long.TryParse(faultDataTokenString, out faultDataToken);
                     }
                 }
                 if (File.Exists(gpsTokenFilePath))
                 {
-                    using (StreamReader gpsTokenFileReader = new StreamReader(gpsTokenFilePath))
+                    using (StreamReader gpsTokenFileReader = new(gpsTokenFilePath))
                     {
                         String gpsTokenString = gpsTokenFileReader.ReadToEnd();
-                        long.TryParse(gpsTokenString, out gpsToken);
+                        _ = long.TryParse(gpsTokenString, out gpsToken);
                     }
                 }
                 if (File.Exists(statusDataTokenFilePath))
                 {
-                    using (StreamReader statusDataTokenFileReader = new StreamReader(statusDataTokenFilePath))
+                    using (StreamReader statusDataTokenFileReader = new(statusDataTokenFilePath))
                     {
                         String statusDataTokenString = statusDataTokenFileReader.ReadToEnd();
-                        long.TryParse(statusDataTokenString, out statusDataToken);
+                        _ = long.TryParse(statusDataTokenString, out statusDataToken);
                     }
                 }
             }
@@ -131,13 +131,13 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         /// <returns></returns>
         TrackedVehicle CreateTrackedVehicle(Device device)
         {
-            TrackedVehicle trackedVehicle = new TrackedVehicle(device, OutputFolder, MaximumFileSizeInBytes);
+            TrackedVehicle trackedVehicle = new(device, OutputFolder, MaximumFileSizeInBytes);
             if (DiagnosticsToTrack != null && DiagnosticsToTrack.Count > 0)
             {
                 // Add TrackedDiagnostics.
                 foreach (Diagnostic diagnosticToTrack in DiagnosticsToTrack)
                 {
-                    TrackedDiagnostic trackedDiagnostic = new TrackedDiagnostic(trackedVehicle.Device, diagnosticToTrack, trackedVehicle.FaultDataFilePath, trackedVehicle.StatusDataFilePath, MaximumFileSizeInBytes);
+                    TrackedDiagnostic trackedDiagnostic = new(trackedVehicle.Device, diagnosticToTrack, trackedVehicle.FaultDataFilePath, trackedVehicle.StatusDataFilePath, MaximumFileSizeInBytes);
                     trackedVehicle.TrackedDiagnostics.Add(trackedDiagnostic);
                 }
             }
@@ -260,15 +260,15 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             FeedResultData feedResultData = await feedProcessor.GetFeedDataAsync(feedParameters);
             
             // Write the feed result token (toVersion) values to file.
-            using (StreamWriter faultDataTokenFileWriter = new StreamWriter(faultDataTokenFilePath))
+            using (StreamWriter faultDataTokenFileWriter = new(faultDataTokenFilePath))
             {
                 faultDataTokenFileWriter.Write(feedParameters.LastFaultDataToken);
             }
-            using (StreamWriter gpsTokenFileWriter = new StreamWriter(gpsTokenFilePath))
+            using (StreamWriter gpsTokenFileWriter = new(gpsTokenFilePath))
             {
                 gpsTokenFileWriter.Write(feedParameters.LastGpsDataToken);
             }
-            using (StreamWriter statusDataTokenFileWriter = new StreamWriter(statusDataTokenFilePath))
+            using (StreamWriter statusDataTokenFileWriter = new(statusDataTokenFilePath))
             {
                 statusDataTokenFileWriter.Write(feedParameters.LastStatusDataToken);
             }
@@ -277,7 +277,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             await ProcessFeedResultsAsync(feedResultData);
 
             // Wait for the configured duration before executing the process again.
-            ConsoleUtility.LogListItem($"Waiting for {FeedIntervalSeconds.ToString()} second(s) before starting next iteration...");
+            ConsoleUtility.LogListItem($"Waiting for {FeedIntervalSeconds} second(s) before starting next iteration...");
             await Task.Delay(TimeSpan.FromSeconds(FeedIntervalSeconds));
         }
 
@@ -296,7 +296,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 vehicleListStringBuilder = new StringBuilder();
                 foreach (TrackedVehicle trackedVehicle in trackedVehiclesWithNewData)
                 {
-                    vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId.ToString()}, ");
+                    _ = vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId}, ");
                 }
                 vehicleList = vehicleListStringBuilder.ToString();
                 vehicleList = vehicleList.Substring(0, vehicleList.Length - 2);
@@ -309,7 +309,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 vehicleListStringBuilder = new StringBuilder();
                 foreach (TrackedVehicle trackedVehicle in trackedVehiclesWithNewData)
                 {
-                    vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId.ToString()}, ");
+                    _ = vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId}, ");
                 }
                 vehicleList = vehicleListStringBuilder.ToString();
                 vehicleList = vehicleList.Substring(0, vehicleList.Length - 2);
@@ -322,7 +322,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 vehicleListStringBuilder = new StringBuilder();
                 foreach (TrackedVehicle trackedVehicle in trackedVehiclesWithNewData)
                 {
-                    vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId.ToString()}, ");
+                    _ = vehicleListStringBuilder.Append($"{trackedVehicle.DeviceId}, ");
                 }
                 vehicleList = vehicleListStringBuilder.ToString();
                 vehicleList = vehicleList.Substring(0, vehicleList.Length - 2);

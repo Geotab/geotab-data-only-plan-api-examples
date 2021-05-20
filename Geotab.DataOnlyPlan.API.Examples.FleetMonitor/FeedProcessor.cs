@@ -53,7 +53,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         public FeedProcessor(GeotabDataOnlyPlanAPI api, bool useFaultDataFeed, bool useStatusDataFeed)
         {
             this.api = api;
-            api.AuthenticateAsync();
+            _ = api.AuthenticateAsync();
             controllerCache = new Dictionary<Id, Controller>();
             deviceCache = new Dictionary<Id, Device>();
             diagnosticCache = new Dictionary<Id, Diagnostic>();
@@ -166,7 +166,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
         /// <returns><see cref="FeedResultData"/></returns>
         public async Task<FeedResultData> GetFeedDataAsync(FeedParameters feedParameters)
         {
-            FeedResultData feedResults = new FeedResultData(new List<LogRecord>(), new List<StatusData>(), new List<FaultData>());
+            FeedResultData feedResults = new(new List<LogRecord>(), new List<StatusData>(), new List<FaultData>());
             FeedResult<LogRecord> feedLogRecordData;
             FeedResult<StatusData> feedStatusData = null;
             FeedResult<FaultData> feedFaultData = null;
@@ -182,16 +182,16 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                         feedStartTime = feedParameters.FeedStartSpecificTimeUTC;
                     }
                     feedLogRecordData = await api.GetFeedLogRecordAsync(feedStartTime);
-                    ConsoleUtility.LogListItem("GPS log records received:", feedLogRecordData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedLogRecordData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                    ConsoleUtility.LogListItem("GPS log records received:", feedLogRecordData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedLogRecordData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     if (UseStatusDataFeed == true)
                     {
                         feedStatusData = await api.GetFeedStatusDataAsync(feedStartTime);
-                        ConsoleUtility.LogListItem("StatusData records received:", feedStatusData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedStatusData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                        ConsoleUtility.LogListItem("StatusData records received:", feedStatusData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedStatusData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     }
                     if (UseFaultDataFeed == true)
                     {
                         feedFaultData = await api.GetFeedFaultDataAsync(feedStartTime);
-                        ConsoleUtility.LogListItem("FaultData records received:", feedFaultData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedFaultData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                        ConsoleUtility.LogListItem("FaultData records received:", feedFaultData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedFaultData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     }
                     // Switch to FeedResultToken for subsequent calls.
                     feedParameters.FeedStartOption = Common.FeedStartOption.FeedResultToken;
@@ -200,16 +200,16 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 {
                     // If the feeds are to be called based on feed result token, use the tokens returned in the toVersion of previous GetFeed() calls (or loaded from file, if continuing where processing last left-off) to populate the fromVersion parameter when making the next GetFeed() calls. 
                     feedLogRecordData = await api.GetFeedLogRecordAsync(feedParameters.LastGpsDataToken);
-                    ConsoleUtility.LogListItem("GPS log records received:", feedLogRecordData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedLogRecordData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                    ConsoleUtility.LogListItem("GPS log records received:", feedLogRecordData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedLogRecordData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     if (UseStatusDataFeed == true)
                     {
                         feedStatusData = await api.GetFeedStatusDataAsync(feedParameters.LastStatusDataToken);
-                        ConsoleUtility.LogListItem("StatusData records received:", feedStatusData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedStatusData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                        ConsoleUtility.LogListItem("StatusData records received:", feedStatusData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedStatusData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     }
                     if (UseFaultDataFeed == true)
                     {
                         feedFaultData = await api.GetFeedFaultDataAsync(feedParameters.LastFaultDataToken);
-                        ConsoleUtility.LogListItem("FaultData records received:", feedFaultData.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedFaultData.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+                        ConsoleUtility.LogListItem("FaultData records received:", feedFaultData.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedFaultData.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
                     }
                 }
 
@@ -307,7 +307,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             }
 
             ConsoleUtility.LogComplete(Common.ConsoleColorForUnchangedData);
-            ConsoleUtility.LogListItem($"Controller cache records added/updated:", returnedControllers.Count.ToString(), Common.ConsoleColorForListItems, (returnedControllers.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+            ConsoleUtility.LogListItem($"Controller cache records added/updated:", returnedControllers.Count.ToString(), Common.ConsoleColorForListItems, (returnedControllers.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             }
 
             ConsoleUtility.LogComplete(Common.ConsoleColorForUnchangedData);
-            ConsoleUtility.LogListItem($"Device cache records added/updated:", feedResult.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedResult.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+            ConsoleUtility.LogListItem($"Device cache records added/updated:", feedResult.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedResult.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 }
             }
             ConsoleUtility.LogComplete(Common.ConsoleColorForUnchangedData);
-            ConsoleUtility.LogListItem($"Diagnostics added/updated:", feedResult.Data.Count().ToString(), Common.ConsoleColorForListItems, (feedResult.Data.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+            ConsoleUtility.LogListItem($"Diagnostics added/updated:", feedResult.Data.Count.ToString(), Common.ConsoleColorForListItems, (feedResult.Data.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             }
 
             ConsoleUtility.LogComplete(Common.ConsoleColorForUnchangedData);
-            ConsoleUtility.LogListItem($"FailureMode cache records added/updated:", returnedFailureModes.Count.ToString(), Common.ConsoleColorForListItems, (returnedFailureModes.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+            ConsoleUtility.LogListItem($"FailureMode cache records added/updated:", returnedFailureModes.Count.ToString(), Common.ConsoleColorForListItems, (returnedFailureModes.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             }
 
             ConsoleUtility.LogComplete(Common.ConsoleColorForUnchangedData);
-            ConsoleUtility.LogListItem($"UnitsOfMeasure cache records added/updated:", returnedUnitsOfMeasure.Count.ToString(), Common.ConsoleColorForListItems, (returnedUnitsOfMeasure.Count() > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
+            ConsoleUtility.LogListItem($"UnitsOfMeasure cache records added/updated:", returnedUnitsOfMeasure.Count.ToString(), Common.ConsoleColorForListItems, (returnedUnitsOfMeasure.Count > 0) ? Common.ConsoleColorForChangedData : Common.ConsoleColorForUnchangedData);
         }
     }
 }

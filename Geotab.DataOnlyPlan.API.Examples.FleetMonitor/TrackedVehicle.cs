@@ -33,11 +33,11 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
 
             // Generate names of files to which data associated with the TrackedVehicle will be written.
             DateTime startTime = DateTime.Now;
-            string gpsDataFilename = $"GPS Data - DeviceID {DeviceId.ToString()} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
+            string gpsDataFilename = $"GPS Data - DeviceID {DeviceId} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
             GpsDataFilePath = Path.Combine(outputFolder, gpsDataFilename);
-            string faultDataFilename = $"Fault Data - DeviceID {DeviceId.ToString()} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
+            string faultDataFilename = $"Fault Data - DeviceID {DeviceId} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
             FaultDataFilePath = Path.Combine(outputFolder, faultDataFilename);
-            string statusDataFilename = $"Status Data - DeviceID {DeviceId.ToString()} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
+            string statusDataFilename = $"Status Data - DeviceID {DeviceId} FileID {startTime.ToString(DateFormatStringForOutputFilenames)}.csv";
             StatusDataFilePath = Path.Combine(outputFolder, statusDataFilename);
 
             MaximumFileSizeInBytes = maximumFileSizeInBytes;
@@ -132,7 +132,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
             // If the GPS data file for the current TrackedVehicle has reached the maximum allowed size, change the TrackedGpsData OutputFilePath so that data will be written to a new file.
             if (TrackedGpsData.ReceivedLogRecords.Any())
             {
-                FileInfo gpsDataOutputFileInfo = new FileInfo(GpsDataFilePath);
+                FileInfo gpsDataOutputFileInfo = new(GpsDataFilePath);
                 if (gpsDataOutputFileInfo.Exists && gpsDataOutputFileInfo.Length >= MaximumFileSizeInBytes)
                 {
                     filenamePrefixLength = GpsDataFilePath.Length - newFilenameSuffix.Length;
@@ -149,7 +149,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 if (TrackedDiagnostics.Where(trackedDiagnostic => trackedDiagnostic.DiagnosticCategoryType == TrackedDiagnostic.DiagnosticCategory.FaultData).Any())
                 {
                     // If the FaultData file for the current TrackedVehicle does not yet exist, or if it exists and has reached the maximum allowed size, change the FaultDataFilePath and set the OutputFilePath of all TrackedDiagnostics that represent FaultData so that data will be written to a new file. Also, create the new file and write the header if there is any data to write.
-                    FileInfo faultDataFileInfo = new FileInfo(FaultDataFilePath);
+                    FileInfo faultDataFileInfo = new(FaultDataFilePath);
                     if (faultDataFileInfo.Exists == false || faultDataFileInfo.Length >= MaximumFileSizeInBytes)
                     {
                         filenamePrefixLength = FaultDataFilePath.Length - newFilenameSuffix.Length;
@@ -181,7 +181,7 @@ namespace Geotab.DataOnlyPlan.API.Examples.FleetMonitor
                 if (TrackedDiagnostics.Where(trackedDiagnostic => trackedDiagnostic.DiagnosticCategoryType == TrackedDiagnostic.DiagnosticCategory.StatusData).Any())
                 {
                     // If the StatusData file for the current TrackedVehicle does not yet exist, or if it exists and has reached the maximum allowed size, change the StatusDataFilePath and set the OutputFilePath of all TrackedDiagnostics that represent StatusData so that data will be written to a new file. Also, create the new file and write the header if there is any data to write.
-                    FileInfo statusDataFileInfo = new FileInfo(StatusDataFilePath);
+                    FileInfo statusDataFileInfo = new(StatusDataFilePath);
                     if (statusDataFileInfo.Exists == false || statusDataFileInfo.Length >= MaximumFileSizeInBytes)
                     {
                         filenamePrefixLength = StatusDataFilePath.Length - newFilenameSuffix.Length;
