@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Company>Geotab Inc.</Company>
     <Product>Geotab Data-Only Plan API Examples</Product>
     <Authors>Geotab Inc.</Authors>
-    <Version>1.0.2101.1</Version>
+    <Version>1.1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Geotab.DataOnlyPlan.API" Version="1.0.2101.1" />
+    <PackageReference Include="Geotab.DataOnlyPlan.API" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
